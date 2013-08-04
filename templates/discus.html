@@ -1,29 +1,66 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if discus %}
-  {% for comment in discus.comments %}
-  <ul>
-    <li>Author : {{ comment.author_name }}
-    <li>Email : {{ comment.author_email }}
-    <li>Website : {{ comment.author_website }}
-    <li>{{ comment.body }}
-  </ul>
+  {% if discus and discus.comments.count() %}
+  <h3>{{ discus.comments.count() }} commentaires</h3>
+  <table class="table">
+    {% for comment in discus.comments %}
+    <tr class="comment">
+      <td style="width:100px;">
+        <p class="text-center">
+        <img class="img-polaroid" src="{{ comment.author_email | gravatar }}" alt="maethor gravatar">
+        <br>
+        {% if comment.author_website %}
+        <a href="{{ comment.author_website }}">{{ comment.author_name }}</a>
+        {% else %}
+        {{ comment.author_name }}
+        {% endif %}
+        <br>
+        {{ comment.created_at.date().strftime('%d/%m/%y') }}
+        </p>
+      </td>
+      <td>
+        {{ comment.body | markdown }}
+      </td>
+    </tr>
+  </div>
   {% endfor %}
+  </table>
   {% else %}
-  Pas de discussion
+  <h3>Aucun commentaire</h3>
   {% endif %}
 
-  <h3>Nouveau commentaire</h3>
-  <form action="{{ url_for('comment_new') }}" method="POST" class="form_horizontal">
-    <label for="author_name">Nom</label>
-    <input type="text" name="author_name" id="author_name">
-    <label for="author_email">Email</label>
-    <input type="text" name="author_email" id="author_email">
-    <label for="author_website">Website</label>
-    <input type="text" name="author_website" id="author_website">
-    <textarea name="body" id="body"></textarea>
-    <input type="hidden" name="discus_id" id="discus_id" value="{{ discus_id }}">
-    <input type="submit" value="Poster">
+  <form action="{{ url_for('comment_new') }}" method="POST" class="form-horizontal">
+    <fieldset><legend>Nouveau commentaire</legend>
+      <div class="control-group">
+        <label class="control-label" for="author_name">Nom *</label>
+        <div class="controls">
+          <input type="text" name="author_name" id="author_name">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="author_email">Email *</label>
+        <div class="controls">
+          <input type="text" name="author_email" id="author_email">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="author_website">Website</label>
+        <div class="controls">
+          <input type="text" name="author_website" id="author_website">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <textarea rows="6" style="width:400px;" name="body" id="body"></textarea>
+          <p>Les commentaires interprètent la syntaxe <a href="http://fr.wikipedia.org/wiki/Markdown">Markdown</a>. N'hésitez pas à mettre en *<em>italique</em>* ou en **<strong>gras</strong>**, par exemple.</p>
+        </div>
+      </div>
+      <div class="control-group">
+        <input type="hidden" name="discus_id" id="discus_id" value="{{ discus_id }}">
+        <div class="controls">
+          <input class="btn btn-primary" type="submit" value="Poster">
+        </div>
+      </div>
   </form>
 
 {% endblock %}

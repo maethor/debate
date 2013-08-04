@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Discus</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+  </head>
+<body>
+
+  <div class="container">
+
+    <article>
+    <h1 class="page-title">Discus example</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam urna nisi, tristique at dignissim et, luctus ac magna. Duis turpis ipsum, bibendum at leo at, tincidunt ornare arcu. Cras ac nibh sit amet quam cursus feugiat. Suspendisse sit amet pretium nunc. Duis a fringilla massa. Phasellus blandit tortor non quam lacinia commodo. Donec consectetur tortor quam. Aenean egestas consequat ipsum, ac tincidunt lorem ullamcorper vitae.</p>
+
+    <div id="comment-section">
+    </div>
+
+    <article>
+
+
+  </div>
+
+</body>
+
+<script type="text/javascript">
+  $.get("{{ url_for('print_discus', discus_id='test') }}", function(data) {
+      $('#comment-section').html(data);
+      });
+</script>
+
+</html>

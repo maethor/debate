@@ -8,15 +8,30 @@ from __future__ import (unicode_literals, absolute_import,
 
 from datetime import datetime
 
-from flask import Flask, render_template, abort, request, redirect, url_for
+from flask import Flask, render_template, abort, request, redirect
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.restless import APIManager
+#from flask.ext.restless import APIManager
+from flask.ext.admin import Admin
+from flask.ext.admin.contrib.sqlamodel import ModelView
+from flask.ext.gravatar import Gravatar
+from flask.ext.markdown import Markdown
 
 from settings import settings
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = settings['DATABASE']
 db = SQLAlchemy(app)
+
+gravatar = Gravatar(app,
+                    size=60,
+                    rating='x',
+                    default='retro',
+                    force_default=False,
+                    force_lower=False)
+
+Markdown(app,
+         output_format='html5',
+         safe_mode=True)
 
 
 class Discus(db.Model):
@@ -37,6 +52,7 @@ class Comment(db.Model):
     author_name = db.Column(db.Unicode)
     author_email = db.Column(db.Unicode)
     author_website = db.Column(db.Unicode)
+    body = db.Column(db.Unicode)
     discus_id = db.Column(db.Unicode, db.ForeignKey('discus.id'))
     discus = db.relationship('Discus',
                              backref=db.backref('comments', lazy='dynamic'))
@@ -59,9 +75,13 @@ class Comment(db.Model):
 
 db.create_all()
 
-manager = APIManager(app, flask_sqlalchemy_db=db)
-manager.create_api(Discus, methods=['GET'])
-manager.create_api(Comment, methods=['GET', 'POST'])
+admin = Admin(app)
+admin.add_view(ModelView(Discus, db.session))
+admin.add_view(ModelView(Comment, db.session))
+
+#manager = APIManager(app, flask_sqlalchemy_db=db)
+#manager.create_api(Discus, methods=['GET'])
+#manager.create_api(Comment, methods=['GET', 'POST'])
 
 
 @app.errorhandler(404)
@@ -72,6 +92,11 @@ def error404(e):
 @app.route('/')
 def home():
     return "toto"
+
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 
 @app.route('/discus/<discus_id>')
@@ -93,11 +118,12 @@ def comment_new():
                     f['author_website'], discus)
         db.session.add(c)
         db.session.commit()
-        return redirect(url_for('print_discus', discus_id=discus.id))
+        return redirect(request.referrer)
     else:
         abort(404)
 
 
 if __name__ == '__main__':
     app.debug = True
+    app.config['SECRET_KEY']=b"ezrbzifbvshbfvpefnrv"
     app.run()
