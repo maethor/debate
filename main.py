@@ -73,8 +73,6 @@ class Comment(db.Model):
         return '<Comment %r>' % self.id
 
 
-db.create_all()
-
 admin = Admin(app)
 admin.add_view(ModelView(Discus, db.session))
 admin.add_view(ModelView(Comment, db.session))
@@ -124,6 +122,8 @@ def comment_new():
 
 
 if __name__ == '__main__':
+    db.create_all()
+
     app.debug = True
     app.config['SECRET_KEY']=b"ezrbzifbvshbfvpefnrv"
     app.run()
