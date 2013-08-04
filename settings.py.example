@@ -1,4 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-DATABASE = 'sqlite:///tmp/discus.db'
+from __future__ import division, absolute_import, unicode_literals
+
+settings = dict()
+
+settings['DATABASE'] = 'sqlite:////tmp/discus.db'
+
