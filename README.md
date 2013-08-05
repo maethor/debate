@@ -50,10 +50,10 @@ In the next version, port will be configurable and a wsgi file will be provided 
 
 ## Technologies used
 
-- Python_
-- `The Flask Python Web microframework`_, with Admin, Gravatar, Markdown, SQLAlchemy and WTForms extensions
-- Bootstrap_, the Twitter HTML5/CSS3 framework
-- jQuery_ (not used by Debate but usefull to include a thread)
+- [Python][python]
+- [The Flask Python Web microframework][flask], with Admin, Gravatar, Markdown, SQLAlchemy and WTForms extensions
+- [Bootstrap][bootstrap], the Twitter HTML5/CSS3 framework
+- [jQuery][jquery] (not used by Debate but usefull to include a thread)
 
 ## TODO / Ideas
 
@@ -68,9 +68,8 @@ In the next version, port will be configurable and a wsgi file will be provided 
 * REST API
 
 
-.. _Python: https://en.wikipedia.org/wiki/Python_(programming_language)
-.. _The Flask Python Web microframework: http://flask.pocoo.org/
-.. _Bootstrap 2.3: http://getbootstrap.com/2.3.2/
-.. _jQuery: http://jquery.com/
-.. _WTF licence: http://en.wikipedia.org/wiki/WTFPL
+[python]: https://en.wikipedia.org/wiki/Python_(programming_language)
+[flask]: http://flask.pocoo.org/
+[bootstrap]: http://getbootstrap.com/2.3.2/
+[jquery]: http://jquery.com/
 
