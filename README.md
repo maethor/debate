@@ -32,6 +32,8 @@ So the use it, the best way is to include one of these pages using JQuery Ajax r
 
 I repeat, "something" can be anything. The ID is typically to provide here the URL of your blog post to ensure the ID will be unique and "linked" to your the subjet.
 
+The template is using Bootstrap 2.3 classes, so fell free to include it on your website or to add some lines of CSS to style the comment list and the form.
+
 ### Administration
 
 You have an administration panel on `http://debate/admin/` where you can admin threads and comments. For now, **the access is not secure**.
@@ -39,9 +41,19 @@ You have an administration panel on `http://debate/admin/` where you can admin t
 ## Install
 
     cp settings.py.example settings.py
-    python main.py 5000
+    pip install -r requirements.txt
+    python main.py
+
+You can now access it with a browser at the url http://localhost:5000
+
+In the next version, port will be configurable and a wsgi file will be provided to host it with an Apache or Nginx frontend.
 
 ## Technologies used
+
+- Python_
+- `The Flask Python Web microframework`_, with Admin, Gravatar, Markdown, SQLAlchemy and WTForms extensions
+- Bootstrap_, the Twitter HTML5/CSS3 framework
+- jQuery_ (not used by Debate but usefull to include a thread)
 
 ## TODO / Ideas
 
@@ -54,3 +66,11 @@ You have an administration panel on `http://debate/admin/` where you can admin t
 * Allow admin to close a thread
 * Respond to other comments
 * REST API
+
+
+.. _Python: https://en.wikipedia.org/wiki/Python_(programming_language)
+.. _The Flask Python Web microframework: http://flask.pocoo.org/
+.. _Bootstrap 2.3: http://getbootstrap.com/2.3.2/
+.. _jQuery: http://jquery.com/
+.. _WTF licence: http://en.wikipedia.org/wiki/WTFPL
+
