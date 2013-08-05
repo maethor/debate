@@ -27,7 +27,7 @@
 </body>
 
 <script type="text/javascript">
-  $.get("{{ url_for('print_discus', discus_id='test') }}", function(data) {
+  $.get("{{ url_for('print_thread', thread_id='test') }}", function(data) {
       $('#comment-section').html(data);
       });
 </script>

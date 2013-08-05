@@ -34,7 +34,7 @@ Markdown(app,
          safe_mode=True)
 
 
-class Discus(db.Model):
+class Thread(db.Model):
     id = db.Column(db.Unicode, primary_key=True)
     is_closed = db.Column(db.Boolean)
 
@@ -43,7 +43,7 @@ class Discus(db.Model):
         self.is_closed = is_closed
 
     def __repr__(self):
-        return '<Discus %r>' % self.id
+        return self.id
 
 
 class Comment(db.Model):
@@ -53,18 +53,18 @@ class Comment(db.Model):
     author_email = db.Column(db.Unicode)
     author_website = db.Column(db.Unicode)
     body = db.Column(db.Unicode)
-    discus_id = db.Column(db.Unicode, db.ForeignKey('discus.id'))
-    discus = db.relationship('Discus',
+    thread_id = db.Column(db.Unicode, db.ForeignKey('thread.id'))
+    thread = db.relationship('Thread',
                              backref=db.backref('comments', lazy='dynamic'))
     created_at = db.Column(db.DateTime)
 
     def __init__(self, body, author_name, author_email, author_website,
-                 discus, created_at=None):
+                 thread, created_at=None):
         self.body = body
         self.author_name = author_name
         self.author_email = author_email
         self.author_website = author_website
-        self.discus = discus
+        self.thread = thread
         if created_at is None:
             created_at = datetime.utcnow()
         self.created_at = created_at
@@ -74,11 +74,11 @@ class Comment(db.Model):
 
 
 admin = Admin(app)
-admin.add_view(ModelView(Discus, db.session))
+admin.add_view(ModelView(Thread, db.session))
 admin.add_view(ModelView(Comment, db.session))
 
 #manager = APIManager(app, flask_sqlalchemy_db=db)
-#manager.create_api(Discus, methods=['GET'])
+#manager.create_api(Thread, methods=['GET'])
 #manager.create_api(Comment, methods=['GET', 'POST'])
 
 
@@ -97,23 +97,23 @@ def test():
     return render_template('test.html')
 
 
-@app.route('/discus/<discus_id>')
-def print_discus(discus_id):
-    discus = Discus.query.filter_by(id=discus_id).first()
-    return render_template('discus.html', discus_id=discus_id, discus=discus)
+@app.route('/thread/<thread_id>')
+def print_thread(thread_id):
+    thread = Thread.query.filter_by(id=thread_id).first()
+    return render_template('thread.html', thread_id=thread_id, thread=thread)
 
 
 @app.route('/comment/new', methods=['GET', 'POST'])
 def comment_new():
     if request.method == 'POST':
         f = request.form
-        discus = Discus.query.filter_by(id=f['discus_id']).first()
-        if not discus:
-            discus = Discus(f['discus_id'])
-            db.session.add(discus)
+        thread = Thread.query.filter_by(id=f['thread_id']).first()
+        if not thread:
+            thread = Thread(f['thread_id'])
+            db.session.add(thread)
 
         c = Comment(f['body'], f['author_name'], f['author_email'],
-                    f['author_website'], discus)
+                    f['author_website'], thread)
         db.session.add(c)
         db.session.commit()
         return redirect(request.referrer)

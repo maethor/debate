@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if discus and discus.comments.count() %}
-  <h3>{{ discus.comments.count() }} commentaires</h3>
+  {% if thread and thread.comments.count() %}
+  <h3>{{ thread.comments.count() }} commentaires</h3>
   <table class="table">
-    {% for comment in discus.comments %}
+    {% for comment in thread.comments %}
     <tr class="comment">
       <td style="width:100px;">
         <p class="text-center">
@@ -56,7 +56,7 @@
         </div>
       </div>
       <div class="control-group">
-        <input type="hidden" name="discus_id" id="discus_id" value="{{ discus_id }}">
+        <input type="hidden" name="thread_id" id="thread_id" value="{{ thread_id }}">
         <div class="controls">
           <input class="btn btn-primary" type="submit" value="Poster">
         </div>
