@@ -2,15 +2,15 @@
 
 Debate is an online discussion and commenting service.
 
-It allow anybody to host his own discussion service on his own server, beside a blog. It can effectively replace Disqus to manage comments on static blogs or websites.
+It allows anybody to host his own discussion service on his own server, beside a blog. It can effectively replace Disqus to manage comments on static blogs or websites.
 
-**Warning** : There is still some work to do before this tool can be used in prod. For example, access to administration panel is not limited.
+**Warning** : There is still some work to do before this tool can be used in prod. For example, access to administration panel is not limited, anybody can go there and remove or edit comments.
 
 ## How it works
 
-Utilisation is very simple. You can go on any url `http://debate/thread/<id>` where <id> can be any string. If the discussion is not created yet, it will be at the first comment added.
+It is very easy to use. You can go on any url `http://debate.example/thread/<id>` where `<id>` can be any string. If the discussion is not created yet, it will be at the first comment added.
 
-So the use it, the best way is to include one of these pages using JQuery Ajax request on the bottom of your blog posts. The file `template/test.hml` provide an example of this :
+So the use it, the best way is to include a thread url using JQuery Ajax request on the bottom of your blog posts. The file `template/test.hml` provide an example of this :
 
     <html>
       <head>
@@ -30,13 +30,13 @@ So the use it, the best way is to include one of these pages using JQuery Ajax r
       </script>
     </html>
 
-I repeat, "something" can be anything. The ID is typically to provide here the URL of your blog post to ensure the ID will be unique and "linked" to your the subjet.
+I repeat, "something" can be anything. The idea is typically to use the URL of your blog post to ensure the ID will be unique and "linked" to your the subjet.
 
-The template is using Bootstrap 2.3 classes, so fell free to include it on your website or to add some lines of CSS to style the comment list and the form.
+The template is using Bootstrap 2.3 classes, so feel free to include it on your website or to add some lines of CSS to style the comment list and the form.
 
 ### Administration
 
-You have an administration panel on `http://debate/admin/` where you can admin threads and comments. For now, **the access is not secure**.
+You have an administration panel on `http://debate.example/admin/` where you can admin threads and comments. For now, **the access is not secure**.
 
 ## Install
 
@@ -44,7 +44,7 @@ You have an administration panel on `http://debate/admin/` where you can admin t
     pip install -r requirements.txt
     python main.py
 
-You can now access it with a browser at the url http://localhost:5000
+Then, you can access it with a browser at the url http://localhost:5000
 
 In the next version, port will be configurable and a wsgi file will be provided to host it with an Apache or Nginx frontend.
 
